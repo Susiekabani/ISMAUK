@@ -501,19 +501,18 @@
         }
 
         .form-helper {
-            position: absolute;
-            top: 2.2rem;
-            left: 0.75rem;
+            display: block;
             font-size: 0.85rem;
             color: #999;
-            pointer-events: none;
-            max-width: calc(100% - 1.5rem);
-            opacity: 0.8;
+            margin-top: 0.5rem;
+            max-width: 100%;
+            opacity: 1;
             transition: opacity 0.2s;
+            line-height: 1.4;
         }
 
         .form-group textarea:focus ~ .form-helper {
-            opacity: 0;
+            display: none;
         }
 
         .char-count {
@@ -1587,13 +1586,15 @@
         }
 
         function updateCharCount(textarea, max) {
-            const count = textarea.value.length;
+            // Count words instead of characters
+            const text = textarea.value.trim();
+            const wordCount = text.length === 0 ? 0 : text.split(/\s+/).length;
             const countId = textarea.name + 'Count';
             const countElement = document.getElementById(countId);
             
             if (countElement) {
-                countElement.textContent = count;
-                if (count > max * 0.9) {
+                countElement.textContent = wordCount;
+                if (wordCount > max * 0.9) {
                     countElement.parentElement.classList.add('warning');
                 } else {
                     countElement.parentElement.classList.remove('warning');
@@ -1641,20 +1642,38 @@
             const name = document.querySelector('[name="name"]')?.value || 'Application';
 
             const element = document.getElementById('summaryPreview');
+            
+            // Make sure element has content
+            if (!element || element.textContent.trim().length === 0) {
+                alert('Error: Application summary is empty. Please fill in all required fields.');
+                return;
+            }
+
             const opt = {
                 margin: [10, 10, 10, 10],
                 filename: `ISMAUK_Awards_2026_${name}_${tier}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: { scale: 2, allowTaint: true, useCORS: true },
                 jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
             };
 
-            html2pdf().set(opt).from(element).save();
-
-            document.getElementById('successMessage').classList.add('show');
-            setTimeout(() => {
-                document.getElementById('successMessage').classList.remove('show');
-            }, 5000);
+            // Clone element to avoid modifying original
+            const clonedElement = element.cloneNode(true);
+            
+            html2pdf()
+                .set(opt)
+                .from(clonedElement)
+                .save()
+                .then(() => {
+                    document.getElementById('successMessage').classList.add('show');
+                    setTimeout(() => {
+                        document.getElementById('successMessage').classList.remove('show');
+                    }, 5000);
+                })
+                .catch((error) => {
+                    console.error('PDF generation error:', error);
+                    alert('Error generating PDF. Please try again.');
+                });
         }
 
         function showAwardDetail(award) {
