@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISMAUK Stress Management Awards 2026</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -502,13 +503,13 @@
 
         .form-helper {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #999;
-            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
             max-width: 100%;
             opacity: 1;
             transition: opacity 0.2s;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .form-group textarea:focus ~ .form-helper {
@@ -1498,8 +1499,8 @@
                                      q.id;
                     div.innerHTML = `
                         <label>${q.label}</label>
-                        <textarea name="${q.id}" maxlength="${q.maxLength}" required onkeyup="updateCharCount(this, ${q.maxLength})"></textarea>
                         <div class="form-helper">${getHelperText(helperId)}</div>
+                        <textarea name="${q.id}" maxlength="${q.maxLength}" required onkeyup="updateCharCount(this, ${q.maxLength})"></textarea>
                         <div class="char-count"><span id="${q.id}Count">0</span>/${q.maxLength}</div>
                     `;
                     container.appendChild(div);
@@ -1642,130 +1643,114 @@
             const type = document.querySelector('input[name="applicantType"]:checked').value;
             const name = document.querySelector('[name="name"]')?.value || 'Application';
 
-            // Create element with all content
-            const element = document.createElement('div');
-            element.style.padding = '20px';
-            element.style.fontFamily = 'Georgia, serif';
-            element.style.backgroundColor = 'white';
-            element.style.color = '#333';
-            element.style.lineHeight = '1.6';
-
-            let html = `
-                <h1 style="color: #003d7a; text-align: center; font-size: 24px; margin-bottom: 30px;">
-                    🏆 ISMAUK Awards 2026
-                </h1>
-                <h2 style="color: #003d7a; font-size: 18px; border-bottom: 2px solid #a91e6a; padding-bottom: 10px;">
-                    Application Form
-                </h2>
-                
-                <h3 style="color: #003d7a; font-size: 14px; margin-top: 20px; margin-bottom: 10px;">
-                    Award Category
-                </h3>
-                <p style="margin: 5px 0;"><strong>Tier:</strong> ${tier.charAt(0).toUpperCase() + tier.slice(1)}</p>
-                <p style="margin: 5px 0;"><strong>Type:</strong> ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}</p>
-                
-                <h3 style="color: #003d7a; font-size: 14px; margin-top: 20px; margin-bottom: 10px;">
-                    Your Details
-                </h3>
+            // Build content
+            let content = `
+                <div style="font-family: Arial, sans-serif; padding: 20px; background: white; color: #333;">
+                    <h1 style="color: #003d7a; text-align: center; margin-bottom: 10px;">ISMAUK Awards 2026</h1>
+                    <h2 style="color: #a91e6a; text-align: center; margin-bottom: 30px; font-size: 16px;">Application Form</h2>
+                    
+                    <h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Award Category</h3>
+                    <p><strong>Tier:</strong> ${tier.charAt(0).toUpperCase() + tier.slice(1)}</p>
+                    <p><strong>Type:</strong> ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}</p>
+                    
+                    <h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Your Details</h3>
             `;
 
             // Add details
-            const detailsToInclude = [
+            const details = [
                 { name: 'name', label: 'Name' },
                 { name: 'email', label: 'Email' },
                 { name: 'telephone', label: 'Telephone' },
-                { name: 'address', label: 'Address' },
-                { name: 'website', label: 'Website' },
-                { name: 'sector', label: 'Sector' }
+                { name: 'address', label: 'Address' }
             ];
 
-            detailsToInclude.forEach(detail => {
-                const value = document.querySelector(`[name="${detail.name}"]`)?.value;
-                if (value && value.trim()) {
-                    html += `<p style="margin: 5px 0;"><strong>${detail.label}:</strong> ${value}</p>`;
+            details.forEach(d => {
+                const val = document.querySelector(`[name="${d.name}"]`)?.value;
+                if (val && val.trim()) {
+                    content += `<p><strong>${d.label}:</strong> ${val}</p>`;
                 }
             });
 
-            // Add answers
-            html += `<h3 style="color: #003d7a; font-size: 14px; margin-top: 20px; margin-bottom: 10px;">
-                        Application Answers
-                    </h3>`;
+            // Add answers section
+            content += `<h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Application Answers</h3>`;
 
             const textareas = document.querySelectorAll('#questionsContainer textarea');
-            let answerCount = 0;
+            let hasAnswers = false;
 
-            textareas.forEach((textarea, index) => {
-                if (textarea.value && textarea.value.trim()) {
-                    answerCount++;
-                    const questionLabel = textarea.previousElementSibling?.textContent || `Question ${index + 1}`;
-                    html += `
-                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
-                            <p style="margin: 0 0 8px 0;"><strong>${questionLabel}</strong></p>
-                            <p style="margin: 0; color: #555; white-space: pre-wrap; font-size: 13px;">
-                                ${escapeHtml(textarea.value)}
-                            </p>
-                        </div>
-                    `;
+            textareas.forEach(ta => {
+                if (ta.value && ta.value.trim()) {
+                    hasAnswers = true;
+                    const q = ta.previousElementSibling?.textContent || 'Question';
+                    content += `<div style="margin-top: 15px; padding: 10px; border-left: 3px solid #a91e6a; background: #f9f9f9;">
+                        <p style="margin: 0 0 8px 0; font-weight: bold; color: #003d7a;">${q}</p>
+                        <p style="margin: 0; color: #555; font-size: 13px; white-space: pre-wrap; line-height: 1.5;">${ta.value}</p>
+                    </div>`;
                 }
             });
 
-            if (answerCount === 0) {
-                alert('Please fill in at least one question before downloading.');
+            if (!hasAnswers) {
+                alert('Please fill in at least one answer.');
                 return;
             }
 
-            html += `
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #999; font-size: 12px;">
-                    <p style="margin: 0;">Generated: ${new Date().toLocaleDateString()} | ISMAUK Stress Management Awards 2026</p>
-                </div>
-            `;
+            content += `</div>`;
 
-            element.innerHTML = html;
+            // Create temporary container
+            const container = document.createElement('div');
+            container.innerHTML = content;
+            container.style.position = 'absolute';
+            container.style.left = '-9999px';
+            container.style.width = '210mm';
+            container.style.minHeight = '297mm';
+            container.style.backgroundColor = 'white';
+            document.body.appendChild(container);
 
-            const opt = {
-                margin: [15, 15, 15, 15],
-                filename: `ISMAUK_Awards_2026_${name}_${tier}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2, 
-                    allowTaint: true, 
-                    useCORS: true, 
-                    backgroundColor: '#ffffff',
-                    logging: false
-                },
-                jsPDF: { 
-                    orientation: 'portrait', 
-                    unit: 'mm', 
-                    format: 'a4',
-                    compress: true
+            // Use html2canvas to convert HTML to image
+            html2canvas(container, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                // Create PDF from canvas
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = pageWidth - 20; // 10mm margins
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                let heightLeft = imgHeight;
+                let position = 10;
+
+                // Add image to PDF with proper scaling
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                // Add additional pages if needed
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight + 10;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
                 }
-            };
 
-            html2pdf()
-                .set(opt)
-                .from(element)
-                .save()
-                .then(() => {
-                    document.getElementById('successMessage').classList.add('show');
-                    setTimeout(() => {
-                        document.getElementById('successMessage').classList.remove('show');
-                    }, 5000);
-                })
-                .catch((error) => {
-                    console.error('PDF Error:', error);
-                    alert('Error creating PDF. Please email your application to admin@isma.org.uk');
-                });
-        }
+                // Save the PDF
+                pdf.save(`ISMAUK_Awards_2026_${name}_${tier}.pdf`);
 
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
+                // Clean up
+                document.body.removeChild(container);
+
+                // Show success message
+                document.getElementById('successMessage').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.remove('show');
+                }, 5000);
+            }).catch(error => {
+                console.error('PDF Error:', error);
+                document.body.removeChild(container);
+                alert('Error creating PDF. Please email your application to admin@isma.org.uk');
+            });
         }
 
         function showAwardDetail(award) {
