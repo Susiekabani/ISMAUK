@@ -1,188 +1,97 @@
-# ISMAUK Sponsorship Packages 2026
+# ISMAUK Stress Management Awards 2026
 
-Professional sponsorship marketing materials for the International Stress Management Association UK (ISMAUK).
+Online application portal for the ISMAUK Stress Management Awards.
 
-## 📋 Contents
+## 🏆 About the Awards
 
-This repository contains ready-to-deploy sponsorship marketing materials:
+The ISMAUK Stress Management Awards recognise excellence in workplace wellbeing, psychological safety and stress reduction. They celebrate organisations, teams and individuals who demonstrate outstanding leadership, innovation and impact in reducing stress and promoting mental wellbeing at work.
 
-### HTML Pages
-- **`index.html`** - Landing page with overview of all sponsorship tiers, benefits, and quick comparison
-- **`sponsorship-packages.html`** - Detailed full-page with complete package descriptions, testimonials, and comprehensive comparison table
+- **Bronze Award** — Starting Out (Progress, not perfection)
+- **Silver Award** — Established Practice (Embedded practice & maturity)
+- **Gold Award** — Strategic Excellence (Excellence, not just activity)
 
-### Word Documents  
-- **`ISMAUK_Sponsorship_SHORT_ENHANCED.docx`** - 2-page professional sponsorship overview (for email/quick distribution)
-- **`ISMAUK_Sponsorship_LONG_ENHANCED.docx`** - 5-page comprehensive sponsorship guide (for website/detailed proposals)
+**Closing Date: 30 September 2026**
 
-### Documentation
-- **`README.md`** - This file
+## 📋 Features
 
-## 🎯 Quick Start
+✅ Interactive multi-step application form
+✅ Award tier descriptions with detailed eligibility criteria
+✅ Scoring rubrics for each award level
+✅ PDF download of completed applications
+✅ Responsive design (works on mobile & desktop)
+✅ Comprehensive guidance on strong applications
+✅ Judges' notes for each question
 
-### Using the HTML Pages
+## 🚀 Quick Start
 
-1. **Landing Page** - Start prospects here:
-   ```
-   https://your-domain.com/sponsorship/index.html
-   ```
-   Perfect for initial outreach, social media links, email campaigns
+### Option 1: GitHub Pages (Automatic)
 
-2. **Detailed Page** - For deeper exploration:
-   ```
-   https://your-domain.com/sponsorship/sponsorship-packages.html
-   ```
-   Full details, all benefits, comparison tables, testimonials
+1. Fork this repository
+2. Go to **Settings** → **Pages**
+3. Set **Source** to `main` branch
+4. Your site will be live at `https://yourusername.github.io/ismauk-awards-2026`
 
-### Using the Word Documents
+### Option 2: Local Testing
 
-- **SHORT version** - Email attachments, quick reference, social media
-- **LONG version** - Website PDF download, detailed proposals, procurement packages
-
-## 📱 Features
-
-### HTML Pages
-✓ **Fully responsive** - Desktop, tablet, mobile optimized  
-✓ **ISMAUK branded** - Navy blue (#002E5C), magenta (#A6236A), teal accents  
-✓ **Self-contained** - No external dependencies, pure HTML/CSS/JavaScript  
-✓ **Animated** - Smooth fade-ins, hover effects, professional interactions  
-✓ **Accessible** - Semantic HTML, clear structure, readable contrast  
-
-### Five Sponsorship Tiers
-1. **Sponsor the Year** (£7,500) - Lead visibility across all 2026 campaigns
-2. **Sponsor the Week** (£6,000) - International Stress Awareness Week ownership
-3. **Sponsor the Summit** (£4,500) - Global Online Stress & Wellbeing Summit
-4. **Sponsor the Awards** (£2,500) - Stress Awards event association
-5. **Sponsor a Session** (£750) - Individual panel session (3 slots available)
-
-### Every Package Includes
-✓ ISMAUK Partner kite mark  
-✓ Certificate of Partnership  
-✓ Complimentary delegate places (2-6 depending on tier)  
-✓ Logo placement and social media recognition  
-✓ Named acknowledgement at events  
-
-## 🎨 Branding
-
-All materials use ISMAUK's official brand colours:
-- **Primary Navy**: #002E5C
-- **Accent Magenta**: #A6236A  
-- **Secondary Teal**: #7CB9B3
-
-Fonts: Segoe UI, sans-serif (professional, universally available)
-
-To customize colours, edit the CSS `:root` variables in the HTML files.
-
-## 📊 Sponsorship Comparison
-
-| Tier | Price | Duration | Logo Placement | Complimentary Places | Speaking Opportunity |
-|------|-------|----------|-----------------|----------------------|----------------------|
-| Sponsor the Year | £7,500 | 12 months | Homepage | 6 | Yes |
-| Sponsor the Week | £6,000 | Nov 2-6 | Campaign materials | 5 | — |
-| Sponsor the Summit | £4,500 | Nov 4 | Summit materials | 4 | — |
-| Sponsor the Awards | £2,500 | Event | Awards materials | 3 | Yes |
-| Sponsor a Session | £750 | Nov 4 | Session materials | 2 | — |
-
-## 🚀 Deployment
-
-### Option 1: Static Website
-Drop the HTML files into your website:
-```
-/sponsorship/
-  ├── index.html
-  └── sponsorship-packages.html
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/ismauk-awards-2026.git
 ```
 
-### Option 2: GitHub Pages
-1. Push this repository to GitHub
-2. Enable GitHub Pages in settings
-3. Access at: `https://yourname.github.io/ismauk-sponsorship/`
+2. Open `index.html` in your web browser (no server needed)
 
-### Option 3: Embed in Existing Site
-Use the HTML sections to integrate with your current website template.
+### Option 3: Deploy to Custom Domain
 
-## 📧 Contact
+1. Upload the files to your web hosting provider
+2. Ensure `index.html` is the default page
+3. Visit your domain
 
-**Carole Spiers MBE**  
-Chair, International Stress Management Association UK  
-📧 [chair@isma.org.uk](mailto:chair@isma.org.uk)  
-🌐 [www.isma.org.uk](https://www.isma.org.uk)  
-📱 +44 7823 745056  
-
-## 📄 File Structure (Recommended)
+## 📁 File Structure
 
 ```
-sponsorship-2026/
-├── README.md
-├── index.html
-├── sponsorship-packages.html
-├── assets/
-│   └── (future images, logos, PDFs)
-└── docs/
-    ├── ISMAUK_Sponsorship_SHORT_ENHANCED.docx
-    └── ISMAUK_Sponsorship_LONG_ENHANCED.docx
+├── index.html          # Main application form
+├── README.md           # This file
+└── .gitignore          # Git ignore file
 ```
 
-## ✨ What's Included
+## 🛠️ How It Works
 
-### HTML Index Page
-- Hero header with CTAs
-- Quick value proposition
-- Trust-building statistics
-- 5 package preview cards (with "Premium" badge on top tier)
-- 6 key benefits with icons
-- Quick comparison table
-- Call-to-action section
-- Professional footer
+1. **Applicants visit the site** and read about the awards
+2. **Choose their award tier** (Bronze, Silver, or Gold)
+3. **Select applicant type** (Individual or Organisation)
+4. **Complete multi-step form** with auto-loading questions
+5. **Download PDF** of their completed application
+6. **Email PDF to admin@ismauk.org.uk** before deadline
 
-### HTML Detailed Page
-- Comprehensive header
-- Introduction & key statistics
-- Complete package descriptions
-- Audience reach information
-- Kite mark explanation
-- Testimonials (Stephen Fry & Prof. Sir Cary Cooper CBE)
-- Extensive benefits section
-- Full comparison table
-- Contact information
+## 💾 Data Storage
 
-### Word Documents
-- Enhanced copy with stronger value propositions
-- Professional formatting & typography
-- Colour-coded package tiers
-- Improved visual hierarchy
-- Ready to print or convert to PDF
+**This form does NOT store data on any server.** All information is:
+- Kept in the user's browser
+- Only saved when they download the PDF
+- Completely private and secure
+- User controls when/if to submit
 
-## 🔄 Updates & Modifications
+## 🎨 Customization
 
-To update sponsorship details:
+To customize the site, edit `index.html`:
 
-1. **HTML Pages**: Edit the relevant sections and test in browser
-2. **Word Documents**: Use Word to edit, update colors/fonts as needed
-3. **Colours**: Modify `:root` CSS variables if brand colours change
-4. **Contact Details**: Update chair email, phone, website in all files
+- **Colors:** Modify CSS variables at the top (`--primary`, `--accent`, etc.)
+- **Content:** Update award descriptions, questions, or guidance text
+- **Email:** Change `admin@isma.org.uk` to your email address
 
-## 💡 Usage Tips
+## 📞 Support
 
-- **Email campaigns**: Link to `index.html` or attach SHORT Word doc
-- **LinkedIn/Twitter**: Link to `index.html` for discovery
-- **Website**: Embed `index.html` directly or link to full `sponsorship-packages.html`
-- **Procurement**: Provide LONG Word doc for official evaluation
-- **Presentations**: Use Word docs for slide decks and handouts
+For questions about the awards or application process, contact:
+**admin@isma.org.uk**
 
-## 📝 Notes
+## 📜 License
 
-- All materials are 2026-specific. Update dates for future years.
-- The "3 slots available" for Sponsor a Session can be modified as needed
-- Bespoke packages are mentioned as welcome—discuss custom arrangements via email
-- Each package category allows multiple sponsors (subject to availability)
-
-## 🙋 Support
-
-For questions about content or deployment, contact:  
-**Carole Spiers MBE** at chair@isma.org.uk
+© 2026 International Stress Management Association UK (ISMAUK)
 
 ---
 
-**Last Updated**: May 2026  
-**Version**: 1.0  
-**Status**: Ready for production
+**Ready to deploy?**
+
+1. Click "Use this template" to create your own copy
+2. Enable GitHub Pages in settings
+3. Your application portal is live!
