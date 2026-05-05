@@ -1567,6 +1567,11 @@
 
             currentStep = step;
 
+            // Load questions when going to step 3
+            if (step === 3) {
+                updateQuestions();
+            }
+
             if (step === 4) {
                 generateSummary();
             }
@@ -1643,104 +1648,156 @@
                 return;
             }
 
-            const tier = document.querySelector('input[name="awardTier"]:checked').value;
-            const type = document.querySelector('input[name="applicantType"]:checked').value;
-            const name = document.querySelector('[name="name"]')?.value || 'Application';
-
-            // Create PDF
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            let yPosition = 20;
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-            const margin = 15;
-            const lineHeight = 7;
-            const maxWidth = pageWidth - (margin * 2);
-
-            // Helper function to add text with wrapping
-            function addText(text, fontSize, bold, yPos) {
-                pdf.setFontSize(fontSize);
-                if (bold) {
-                    pdf.setFont(undefined, 'bold');
-                } else {
-                    pdf.setFont(undefined, 'normal');
-                }
-                const lines = pdf.splitTextToSize(text, maxWidth);
-                pdf.text(lines, margin, yPos);
-                return yPos + (lines.length * lineHeight);
-            }
-
-            // Helper function to handle page breaks
-            function checkPageBreak(height) {
-                if (yPosition + height > pageHeight - margin) {
-                    pdf.addPage();
-                    yPosition = margin;
-                }
-            }
-
             try {
-                // Title
-                checkPageBreak(20);
-                yPosition = addText('ISMAUK Awards 2026', 18, true, yPosition);
-                yPosition = addText('Application Form', 14, true, yPosition) + 10;
+                // Get form data directly from input elements
+                const tier = document.querySelector('input[name="awardTier"]:checked')?.value;
+                const type = document.querySelector('input[name="applicantType"]:checked')?.value;
+                const name = document.querySelector('[name="name"]')?.value || 'Application';
+                const email = document.querySelector('[name="email"]')?.value || '';
+                const telephone = document.querySelector('[name="telephone"]')?.value || '';
+                const address = document.querySelector('[name="address"]')?.value || '';
 
-                // Award Category
-                checkPageBreak(15);
-                yPosition = addText('Award Category', 12, true, yPosition);
-                yPosition = addText(`Tier: ${tier.charAt(0).toUpperCase() + tier.slice(1)}`, 11, false, yPosition) + 2;
-                yPosition = addText(`Type: ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}`, 11, false, yPosition) + 8;
-
-                // Your Details
-                checkPageBreak(15);
-                yPosition = addText('Your Details', 12, true, yPosition);
-
-                const details = [
-                    { name: 'name', label: 'Name' },
-                    { name: 'email', label: 'Email' },
-                    { name: 'telephone', label: 'Telephone' },
-                    { name: 'address', label: 'Address' }
-                ];
-
-                details.forEach(d => {
-                    const val = document.querySelector(`[name="${d.name}"]`)?.value;
-                    if (val && val.trim()) {
-                        checkPageBreak(10);
-                        yPosition = addText(`${d.label}: ${val}`, 10, false, yPosition) + 2;
-                    }
-                });
-
-                // Application Answers
-                yPosition += 5;
-                checkPageBreak(15);
-                yPosition = addText('Application Answers', 12, true, yPosition);
-
-                const textareas = document.querySelectorAll('#questionsContainer textarea');
-                let hasAnswers = false;
-
-                textareas.forEach(ta => {
-                    if (ta.value && ta.value.trim()) {
-                        hasAnswers = true;
-                        const q = ta.previousElementSibling?.textContent || 'Question';
-                        const answer = ta.value;
-
-                        checkPageBreak(15);
-                        yPosition = addText(q, 11, true, yPosition) + 2;
-                        checkPageBreak(20);
-                        yPosition = addText(answer, 10, false, yPosition) + 5;
-                    }
-                });
-
-                if (!hasAnswers) {
-                    alert('Please fill in at least one answer.');
+                if (!tier || !type) {
+                    alert('Please select award tier and applicant type.');
                     return;
                 }
 
-                // Footer
-                yPosition += 5;
-                checkPageBreak(10);
-                yPosition = addText(`Generated: ${new Date().toLocaleDateString()} | ISMAUK Stress Management Awards 2026`, 8, false, yPosition);
+                // Collect all answers from the form
+                const answers = [];
+                const formInputs = document.querySelectorAll('input[type="radio"], input[type="text"], textarea, select');
+                
+                formInputs.forEach(input => {
+                    if (input.name && input.name.startsWith('q') && input.value && input.value.trim()) {
+                        answers.push({
+                            name: input.name,
+                            value: input.value.trim()
+                        });
+                    }
+                });
 
-                // Save PDF
+                if (answers.length === 0) {
+                    alert('Please fill in at least one question before downloading.');
+                    return;
+                }
+
+                // Create PDF using jsPDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                let yPos = 20;
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 15;
+                const maxWidth = pageWidth - (margin * 2);
+                const lineHeight = 5;
+
+                // Helper function
+                function addSection(title, fontSize = 12, isBold = true) {
+                    if (yPos > pageHeight - 30) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+                    
+                    pdf.setFontSize(fontSize);
+                    if (isBold) {
+                        pdf.setFont(undefined, 'bold');
+                    } else {
+                        pdf.setFont(undefined, 'normal');
+                    }
+                    pdf.text(title, margin, yPos);
+                    yPos += fontSize / 2 + 2;
+                    return yPos;
+                }
+
+                function addText(text, fontSize = 10) {
+                    if (!text) return yPos;
+                    
+                    if (yPos > pageHeight - 25) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+
+                    pdf.setFontSize(fontSize);
+                    pdf.setFont(undefined, 'normal');
+                    
+                    const lines = pdf.splitTextToSize(String(text), maxWidth);
+                    pdf.text(lines, margin, yPos);
+                    yPos += (lines.length * lineHeight) + 3;
+                    
+                    return yPos;
+                }
+
+                // Add title
+                pdf.setFontSize(16);
+                pdf.setFont(undefined, 'bold');
+                pdf.text('ISMAUK Awards 2026', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 10;
+
+                pdf.setFontSize(14);
+                pdf.setFont(undefined, 'bold');
+                pdf.text('Application Form', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 15;
+
+                // Award Category
+                addSection('Award Category', 12, true);
+                addText(`Tier: ${tier.charAt(0).toUpperCase() + tier.slice(1)}`, 10);
+                addText(`Type: ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}`, 10);
+                yPos += 5;
+
+                // Your Details
+                addSection('Your Details', 12, true);
+                if (name) addText(`Name: ${name}`, 10);
+                if (email) addText(`Email: ${email}`, 10);
+                if (telephone) addText(`Telephone: ${telephone}`, 10);
+                if (address) addText(`Address: ${address}`, 10);
+                yPos += 5;
+
+                // Application Answers
+                addSection('Application Answers', 12, true);
+
+                // Get the question labels from the page
+                const questionLabels = {};
+                const labels = document.querySelectorAll('#questionsContainer .form-group label');
+                labels.forEach(label => {
+                    // This gets the question text, which we'll use to identify questions
+                    const text = label.textContent.trim();
+                    const qId = label.nextElementSibling?.nextElementSibling?.name; // Get the textarea name
+                    if (qId) {
+                        questionLabels[qId] = text;
+                    }
+                });
+
+                // Add each answer
+                answers.forEach(answer => {
+                    const label = questionLabels[answer.name] || answer.name;
+                    
+                    if (yPos > pageHeight - 40) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+
+                    // Add question label
+                    pdf.setFontSize(11);
+                    pdf.setFont(undefined, 'bold');
+                    const questionLines = pdf.splitTextToSize(label, maxWidth);
+                    pdf.text(questionLines, margin, yPos);
+                    yPos += (questionLines.length * lineHeight) + 2;
+
+                    // Add answer
+                    addText(answer.value, 10);
+                    yPos += 3;
+                });
+
+                // Footer
+                if (yPos > pageHeight - 15) {
+                    pdf.addPage();
+                    yPos = margin;
+                }
+                pdf.setFontSize(8);
+                pdf.setFont(undefined, 'normal');
+                pdf.text(`Generated: ${new Date().toLocaleDateString()} | ISMAUK Stress Management Awards 2026`, margin, pageHeight - 10);
+
+                // Save
                 pdf.save(`ISMAUK_Awards_2026_${name}_${tier}.pdf`);
 
                 // Show success message
@@ -1751,7 +1808,7 @@
 
             } catch (error) {
                 console.error('PDF Error:', error);
-                alert('Error creating PDF. Please email your application to admin@isma.org.uk');
+                alert('Error creating PDF. Error: ' + error.message);
             }
         }
 
