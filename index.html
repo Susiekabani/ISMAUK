@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISMAUK Stress Management Awards 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #003d7a;
+            --accent: #a91e6a;
+            --accent-light: #c73682;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+            --dark: #001f4d;
+            --light: #f8f9fa;
+            --text: #333;
+            --border: #e0e6ed;
+        }
+
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8ecf1 100%);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(167, 30, 106, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-light);
+            font-weight: 300;
+        }
+
+        .closing-date {
+            background: rgba(167, 30, 106, 0.15);
+            border: 2px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-hero {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-hero:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            background: white;
+            margin-bottom: 1rem;
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        /* Info Cards */
+        .info-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Award Tiers */
+        .awards-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .awards-section h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .award-tier {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .award-tier:hover {
+            transform: translateY(-5px);
+        }
+
+        .tier-header {
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .tier-header.bronze {
+            background: linear-gradient(135deg, #8b6914 0%, #cd7f32 100%);
+        }
+
+        .tier-header.silver {
+            background: linear-gradient(135deg, #7a7a7a 0%, #c0c0c0 100%);
+        }
+
+        .tier-header.gold {
+            background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%);
+            color: var(--primary);
+        }
+
+        .tier-emoji {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-description {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .tier-content {
+            padding: 2rem;
+        }
+
+        .tier-content h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .tier-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tier-content li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tier-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .learn-more-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .learn-more-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* Boxes */
+        .eligibility-box, .strong-app, .award-summary-box {
+            background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+        }
+
+        .eligibility-box h4, .strong-app h4, .award-summary-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .strong-app {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .strong-app h4, .strong-app li {
+            color: #155724;
+        }
+
+        .pitfall-item {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+        }
+
+        .pitfall-item strong {
+            color: #d9534f;
+        }
+
+        /* Award Detail Page */
+        .award-detail-page {
+            display: none;
+            animation: fadeIn 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            background: white;
+            z-index: 2000;
+        }
+
+        .award-detail-page.active {
+            display: block;
+        }
+
+        body.detail-open {
+            overflow: hidden;
+        }
+
+        body.detail-open > header,
+        body.detail-open > section,
+        body.detail-open > footer {
+            display: none;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .back-button:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            scroll-margin-top: 80px;
+        }
+
+        .form-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-section > p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="url"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 61, 122, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .form-helper {
+            position: absolute;
+            top: 2.2rem;
+            left: 0.75rem;
+            font-size: 0.85rem;
+            color: #999;
+            pointer-events: none;
+            max-width: calc(100% - 1.5rem);
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .form-group textarea:focus ~ .form-helper {
+            opacity: 0;
+        }
+
+        .char-count {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+
+        .char-count.warning {
+            color: #d9534f;
+            font-weight: 600;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            cursor: pointer;
+            width: auto;
+            border: none;
+        }
+
+        /* Step Navigation */
+        .step-indicator {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            padding: 0.75rem 1.5rem;
+            background: var(--light);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .step.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .step.completed {
+            background: #d4edda;
+            border-color: #28a745;
+            color: var(--primary);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(167, 30, 106, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Guidance Modal */
+        .guidance-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s;
+        }
+
+        .guidance-modal.active {
+            display: block;
+        }
+
+        .guidance-modal-content {
+            background: white;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .guidance-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guidance-close-btn:hover {
+            background: var(--accent-light);
+            transform: rotate(90deg);
+        }
+
+        .guidance-modal-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+            padding-right: 3rem;
+        }
+
+        .guidance-modal-content h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidance-modal-content p {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .guidance-modal-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidance-modal-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            nav ul {
+                gap: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🏆 ISMAUK Awards 2026</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#tiers">Award Tiers</a></li>
+                <li><a href="#apply" onclick="hideAwardDetail()">Apply Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Stress Management Awards 2026</h1>
+            <p class="hero-subtitle"><strong>Recognising Excellence in Workplace Wellbeing & Psychological Safety</strong></p>
+            <div class="closing-date">
+                📅 Closing Date: <strong>30 September 2026</strong><br>
+                All applications must be submitted by midnight
+            </div>
+            <button class="btn-hero" onclick="document.getElementById('apply').scrollIntoView({behavior: 'smooth'})">
+                Start Your Application
+            </button>
+        </div>
+    </section>
+
+    <!-- About the Awards -->
+    <section style="background: white; padding: 3rem 2rem; border-top: 4px solid var(--accent);">
+        <div style="max-width: 900px; margin: 0 auto; line-height: 1.8;">
+            <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 1.5rem;">
+                Established in 2024 to mark ISMAUK's 50th anniversary, the ISMAUK Stress Management Awards recognise excellence in workplace wellbeing, psychological safety and stress reduction. They celebrate organisations, teams and individuals who demonstrate outstanding leadership, innovation and impact in reducing stress and promoting mental wellbeing at work.
+            </p>
+            <p style="font-size: 1.1rem; color: var(--text);">
+                Created to champion positive cultural change, the Awards highlight those who are shaping healthier, more productive and psychologically safe working environments. The Awards showcase achievements in workplace wellbeing, stress reduction, resilience-building, leadership and best practice, providing national visibility for organisations committed to meaningful, sustained improvement.
+            </p>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section id="about" class="info-section">
+        <div class="info-card">
+            <h3>🎯 Why Enter?</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>✓ Demonstrate commitment to wellbeing</li>
+                <li>✓ Strengthen ESG credentials</li>
+                <li>✓ Gain national recognition</li>
+                <li>✓ Showcase best practice</li>
+                <li>✓ Highlight team achievements</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>💼 Eligibility</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>✓ Sole traders</li>
+                <li>✓ Small & large organisations</li>
+                <li>✓ Charities & social enterprises</li>
+                <li>✓ Practitioners & professionals</li>
+                <li>✓ All experience levels</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>📋 Application</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>✓ £75 application fee</li>
+                <li>✓ Multi-step form (15 mins)</li>
+                <li>✓ Download PDF to email</li>
+                <li>✓ Support available</li>
+                <li>✓ Results announced Nov 2026</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Award Tiers -->
+    <section id="tiers" class="awards-section">
+        <h2>Award Tiers</h2>
+        <div style="background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto;">
+            <p style="color: var(--text); margin: 0; line-height: 1.8;">
+                <strong>Selecting the right award level is important.</strong> The Awards are designed to reflect progression and maturity. Choose the category that most accurately reflects your current stage, not where you aspire to be.
+            </p>
+        </div>
+        
+        <div class="awards-grid">
+            <!-- Bronze -->
+            <div class="award-tier">
+                <div class="tier-header bronze">
+                    <div class="tier-emoji">🥉</div>
+                    <div class="tier-name">Bronze</div>
+                    <div class="tier-description">Starting Out</div>
+                </div>
+                <div class="tier-content">
+                    <h4>For Early-Stage Commitment</h4>
+                    <p style="margin-bottom: 1rem; color: #666;">
+                        Taking meaningful first steps in wellbeing and stress management. Progress, not perfection.
+                    </p>
+                    <h4 style="margin-top: 1.5rem;">Key Requirements:</h4>
+                    <ul>
+                        <li>Clear commitment to wellbeing</li>
+                        <li>Active initiative underway</li>
+                        <li>Honest reflection on impact</li>
+                        <li>Intention to develop further</li>
+                    </ul>
+                    <button class="learn-more-btn" onclick="showAwardDetail('bronze')">To learn more about the Bronze award, click here →</button>
+                </div>
+            </div>
+
+            <!-- Silver -->
+            <div class="award-tier">
+                <div class="tier-header silver">
+                    <div class="tier-emoji">🥈</div>
+                    <div class="tier-name">Silver</div>
+                    <div class="tier-description">Established Practice</div>
+                </div>
+                <div class="tier-content">
+                    <h4>For Mature Programs</h4>
+                    <p style="margin-bottom: 1rem; color: #666;">
+                        Well-established wellbeing programmes with clear leadership commitment. Embedded practice & maturity.
+                    </p>
+                    <h4 style="margin-top: 1.5rem;">Key Requirements:</h4>
+                    <ul>
+                        <li>Regular, consistent initiatives</li>
+                        <li>Visible leadership commitment</li>
+                        <li>Evidence of positive impact</li>
+                        <li>Psychological safety embedded</li>
+                    </ul>
+                    <button class="learn-more-btn" onclick="showAwardDetail('silver')">To learn more about the Silver award, click here →</button>
+                </div>
+            </div>
+
+            <!-- Gold -->
+            <div class="award-tier">
+                <div class="tier-header gold">
+                    <div class="tier-emoji">🥇</div>
+                    <div class="tier-name">Gold</div>
+                    <div class="tier-description">Strategic Excellence</div>
+                </div>
+                <div class="tier-content">
+                    <h4>For Strategic Leaders</h4>
+                    <p style="margin-bottom: 1rem; color: #666;">
+                        Strategic, evidence-based integration of wellbeing. Excellence, not just activity.
+                    </p>
+                    <h4 style="margin-top: 1.5rem;">Key Requirements:</h4>
+                    <ul>
+                        <li>Strategic integration org-wide</li>
+                        <li>Evidence-based approach</li>
+                        <li>Measurable impact & outcomes</li>
+                        <li>Long-term sustainability plan</li>
+                    </ul>
+                    <button class="learn-more-btn" onclick="showAwardDetail('gold')">To learn more about the Gold award, click here →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bronze Detail Page -->
+    <div class="award-detail-page" id="bronzeDetail">
+        <div class="content-section">
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+            <h2>🥉 Bronze Award — Starting Out</h2>
+            <p><strong>Progress, Not Perfection</strong></p>
+            
+            <h3>For Early-Stage Commitment</h3>
+            <p>The Bronze Award recognises organisations and individuals who are taking meaningful first steps towards improving health, wellbeing, and stress management.</p>
+
+            <h3>Who is Eligible</h3>
+            <ul>
+                <li>Sole traders working in health, wellbeing, coaching or related fields</li>
+                <li>Organisations at the early stages of their wellbeing journey</li>
+                <li>Small charities</li>
+                <li>Social enterprises (e.g. CICs)</li>
+            </ul>
+
+            <h3>Quality Requirements</h3>
+            <ul>
+                <li>A clear and genuine commitment to employee or personal wellbeing</li>
+                <li>At least one active wellbeing initiative or practice currently in place</li>
+                <li>Evidence of self-reflection — what is working and what could be improved</li>
+                <li>An articulated intention to develop and grow wellbeing practice further</li>
+                <li>Authentic responses that describe real activity, not aspirational statements alone</li>
+            </ul>
+
+            <h3>What Judges Value</h3>
+            <ul>
+                <li>Self-awareness and enthusiasm for impact</li>
+                <li>Genuine action underway and credible plans for development</li>
+                <li>Honest insight over polished metrics</li>
+            </ul>
+
+            <h3>Scoring Rubric</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: var(--primary); color: white;">
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Score</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Rating</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">What This Means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">5</span></td>
+                        <td style="padding: 1rem;"><strong>Excellent</strong></td>
+                        <td style="padding: 1rem;">Thoughtful, clear commitment and action demonstrated</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">4</span></td>
+                        <td style="padding: 1rem;"><strong>Strong</strong></td>
+                        <td style="padding: 1rem;">Clearly explained with good reflection and examples</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">3</span></td>
+                        <td style="padding: 1rem;"><strong>Adequate</strong></td>
+                        <td style="padding: 1rem;">Good explanation with some supporting detail</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">2</span></td>
+                        <td style="padding: 1rem;"><strong>Weak</strong></td>
+                        <td style="padding: 1rem;">Brief explanation with limited depth or evidence</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">1</span></td>
+                        <td style="padding: 1rem;"><strong>Poor</strong></td>
+                        <td style="padding: 1rem;">Weak, unclear or insufficient response</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                <strong>Total Marks: 20 maximum</strong> (4 scored questions × 5 marks each)
+            </p>
+
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+        </div>
+    </div>
+
+    <!-- Silver Detail Page -->
+    <div class="award-detail-page" id="silverDetail">
+        <div class="content-section">
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+            <h2>🥈 Silver Award — Established Practice</h2>
+            <p><strong>Embedded Practice & Maturity</strong></p>
+            
+            <h3>For Well-Established Practice</h3>
+            <p>The Silver Award recognises organisations and individuals with well-established wellbeing and stress management practices and a clear commitment to leadership, consistency and positive impact.</p>
+
+            <h3>Organisations Eligible:</h3>
+            <ul>
+                <li>SMEs or larger organisations with an established wellbeing programme and active leadership involvement</li>
+                <li>Charities of any size with consistent, organisation-wide wellbeing provision</li>
+                <li>Social enterprises with a demonstrated commitment to employee or community wellbeing</li>
+            </ul>
+
+            <h3>Individuals Eligible:</h3>
+            <ul>
+                <li>Practitioners, coaches, consultants, trainers, therapists, HR professionals, occupational health specialists</li>
+                <li>Those with consistent, regular practice — not just isolated activity</li>
+                <li>Those whose work is making a positive, evidence-based difference</li>
+                <li><strong>Note:</strong> Silver is about quality, consistency and impact of your <em>current</em> practice, not length of career</li>
+            </ul>
+
+            <h3>Quality Requirements</h3>
+            <ul>
+                <li>Regular, consistent wellbeing initiatives — not one-off events</li>
+                <li>Visible leadership commitment</li>
+                <li>Evidence of positive impact (qualitative or quantitative)</li>
+                <li>Communication practices that create psychological safety</li>
+                <li>Clear integration of wellbeing into day-to-day operations</li>
+                <li>A credible plan for continued development</li>
+            </ul>
+
+            <h3>Scoring Rubric</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: var(--primary); color: white;">
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Score</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Rating</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">What This Means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">5</span></td>
+                        <td style="padding: 1rem;"><strong>Strong</strong></td>
+                        <td style="padding: 1rem;">Consistent practice with clear professional commitment and demonstrated impact</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">4</span></td>
+                        <td style="padding: 1rem;"><strong>Well-Explained</strong></td>
+                        <td style="padding: 1rem;">Well explained with practical examples or partial evidence</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">3</span></td>
+                        <td style="padding: 1rem;"><strong>Adequate</strong></td>
+                        <td style="padding: 1rem;">Adequate, developing practice with some evidence of consistency</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">2</span></td>
+                        <td style="padding: 1rem;"><strong>Limited</strong></td>
+                        <td style="padding: 1rem;">Limited depth, inconsistency or lack of clarity</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">1</span></td>
+                        <td style="padding: 1rem;"><strong>Weak</strong></td>
+                        <td style="padding: 1rem;">Weak or unclear response</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                <strong>Total Marks: 25 maximum</strong> (5 scored questions × 5 marks each)
+            </p>
+
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+        </div>
+    </div>
+
+    <!-- Gold Detail Page -->
+    <div class="award-detail-page" id="goldDetail">
+        <div class="content-section">
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+            <h2>🥇 Gold Award — Strategic Excellence</h2>
+            <p><strong>Excellence, Not Just Activity</strong></p>
+            
+            <h3>For Strategic Leaders</h3>
+            <p>The Gold Award recognises organisations and experienced practitioners demonstrating strategic, evidence-based integration of wellbeing. Gold represents excellence, maturity and sustainability.</p>
+
+            <h3>Organisations Eligible:</h3>
+            <ul>
+                <li>Organisations of any size with a fully integrated, strategic approach to wellbeing — embedded across the whole organisation</li>
+                <li>Organisations that use data, feedback or audits to inform wellbeing decisions and can demonstrate measurable impact</li>
+                <li>Organisations where senior leadership actively owns, champions and models the wellbeing agenda</li>
+            </ul>
+
+            <h3>Individuals Eligible:</h3>
+            <ul>
+                <li>Practitioners, coaches, consultants, trainers, therapists, HR professionals, occupational health specialists</li>
+                <li>Those with a strategic, structured approach — evidence-informed decision-making and clear methodology</li>
+                <li>Those who can evidence measurable, sustained impact through outcome data, case studies, client feedback, or professional recognition</li>
+                <li>Those investing in professional development with a long-term sustainability plan</li>
+                <li><strong>Note:</strong> Gold recognises depth of expertise and strategic thinking — open to anyone at that level regardless of career length</li>
+            </ul>
+
+            <h3>Quality Requirements</h3>
+            <ul>
+                <li>A formal, strategic wellbeing approach — organisation-wide or underpinning professional practice</li>
+                <li>Regular use of data, audits, outcome measurement or benchmarking to inform decisions</li>
+                <li>Preventative approaches to stress — not only reactive support</li>
+                <li>Measurable positive impact on people, clients, organisational performance or community outcomes</li>
+                <li>A strong culture or professional ethos of psychological safety, inclusion and trust</li>
+                <li>A credible and documented long-term sustainability plan or professional development roadmap</li>
+                <li>Evidence of DEI (Diversity, Equity and Inclusion) embedded within wellbeing practice</li>
+            </ul>
+
+            <h3>Scoring Rubric</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                <thead>
+                    <tr style="background: var(--primary); color: white;">
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Score</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">Rating</th>
+                        <th style="padding: 1rem; text-align: left; font-weight: 600;">What This Means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">5</span></td>
+                        <td style="padding: 1rem;"><strong>Excellent</strong></td>
+                        <td style="padding: 1rem;">Clear, strategic, evidence-based with measurable impact on clients or communities</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">4</span></td>
+                        <td style="padding: 1rem;"><strong>Strong</strong></td>
+                        <td style="padding: 1rem;">Well explained with practical examples or partial evidence</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">3</span></td>
+                        <td style="padding: 1rem;"><strong>Adequate</strong></td>
+                        <td style="padding: 1rem;">Good intent with some evidence, but limited depth or outcomes</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e0e6ed;">
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">2</span></td>
+                        <td style="padding: 1rem;"><strong>Weak</strong></td>
+                        <td style="padding: 1rem;">Largely descriptive with unclear impact or outcomes</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><span style="background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">1</span></td>
+                        <td style="padding: 1rem;"><strong>Poor</strong></td>
+                        <td style="padding: 1rem;">Minimal relevance, detail or evidence provided</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                <strong>Total Marks: 45 maximum</strong> (9 scored questions × 5 marks each)
+            </p>
+
+            <button class="back-button" onclick="hideAwardDetail()">← Back to All Awards</button>
+        </div>
+    </div>
+
+    <!-- Guidance Modal (Hidden) -->
+    <div id="guidanceModal" class="guidance-modal">
+        <div class="guidance-modal-content">
+            <button class="guidance-close-btn" onclick="closeGuidance()">×</button>
+            
+            <h2>What Makes a Strong Application?</h2>
+            
+            <div style="background: linear-gradient(135deg, rgba(0, 61, 122, 0.05) 0%, rgba(167, 30, 106, 0.05) 100%); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <p style="margin: 0; font-size: 1.05rem; color: var(--text); line-height: 1.8;">
+                    <strong>Strong applications are honest, specific, and focused on real impact rather than aspirational language.</strong> Judges value genuine insight into what's actually happening in your organisation or practice, not polished rhetoric.
+                </p>
+            </div>
+
+            <div class="strong-app">
+                <h4>✓ Characteristics of Strong Applications:</h4>
+                <ul>
+                    <li><strong>Be honest and real</strong> — Judges value genuine insight over polished language</li>
+                    <li><strong>Focus on what actually happens in practice</strong> — not aspirational statements</li>
+                    <li><strong>Show impact in a way that suits your level</strong> — qualitative evidence is valid in all categories</li>
+                    <li><strong>Demonstrate leadership involvement</strong> — wellbeing should not be owned by HR alone</li>
+                    <li><strong>Think about culture, not just initiatives</strong> — 'this is how we work' not 'this is what we offer'</li>
+                </ul>
+            </div>
+
+            <h3>Common Pitfalls to Avoid</h3>
+            
+            <div class="pitfall-item">
+                <strong>❌ Listing initiatives with no explanation</strong><br>
+                Avoid simply listing what you do. Explain why you do it and what impact it has.
+            </div>
+
+            <div class="pitfall-item">
+                <strong>❌ Overly generic answers</strong><br>
+                'We support wellbeing' is too vague. Give specific examples and context unique to your organisation.
+            </div>
+
+            <div class="pitfall-item">
+                <strong>❌ Copying policy language</strong><br>
+                Describe your organisational reality, not what policy documents say you should be doing.
+            </div>
+
+            <div class="pitfall-item">
+                <strong>❌ Focusing only on perks</strong><br>
+                Yoga classes and fruit are nice, but without strategic context they don't demonstrate wellbeing culture.
+            </div>
+
+            <div class="pitfall-item">
+                <strong>❌ Repeating the same content</strong><br>
+                Each answer should be distinct and specifically address the question asked.
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Form -->
+    <section id="apply" class="form-section">
+        <h2>Application Form</h2>
+        <p>Complete the form below. Download as PDF and email to <strong>admin@isma.org.uk</strong></p>
+        
+        <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.95rem;">
+            <strong>Need guidance?</strong> <a href="javascript:void(0);" onclick="openGuidance();" style="color: var(--accent); text-decoration: none; font-weight: 600;">What makes a strong application? Click here to find out more →</a>
+        </p>
+
+        <div class="success-message" id="successMessage">
+            ✓ Application downloaded successfully! Please email to admin@isma.org.uk
+        </div>
+
+        <form id="applicationForm">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active" onclick="goToStep(1)">1. Category</div>
+                <div class="step" onclick="goToStep(2)">2. Your Details</div>
+                <div class="step" onclick="goToStep(3)">3. Application</div>
+                <div class="step" onclick="goToStep(4)">4. Summary</div>
+            </div>
+
+            <!-- Step 1: Category Selection -->
+            <div class="form-step active" id="step1">
+                <h3>Step 1: Choose Your Award Category</h3>
+                <p style="margin: 1rem 0 2rem 0; color: #666;">Select the tier that best reflects your current stage.</p>
+
+                <div class="form-group">
+                    <label>Which award tier are you applying for?</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="awardTier" value="bronze" required> 🥉 Bronze
+                        </label>
+                        <label>
+                            <input type="radio" name="awardTier" value="silver"> 🥈 Silver
+                        </label>
+                        <label>
+                            <input type="radio" name="awardTier" value="gold"> 🥇 Gold
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Are you applying as...</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="applicantType" value="individual" required> Individual / Sole Trader
+                        </label>
+                        <label>
+                            <input type="radio" name="applicantType" value="organisation"> Organisation / Charity
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-primary" onclick="goToStep(2)">Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: General Information -->
+            <div class="form-step" id="step2">
+                <h3>Step 2: Your Details</h3>
+                
+                <div class="form-group">
+                    <label>Full Name or Business Name</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Name (if different)</label>
+                    <input type="text" name="contactName">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Telephone</label>
+                    <input type="tel" name="telephone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Address / Head Office</label>
+                    <input type="text" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Website (optional)</label>
+                    <input type="url" name="website">
+                </div>
+
+                <div class="form-group">
+                    <label>Sector / Area of Expertise</label>
+                    <textarea name="sector" maxlength="100" onkeyup="updateCharCount(this, 100)"></textarea>
+                    <div class="char-count"><span id="sectorCount">0</span>/100</div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goToStep(1)">← Back</button>
+                    <button type="button" class="btn-primary" onclick="goToStep(3)">Next Step →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Application Questions -->
+            <div class="form-step" id="step3">
+                <h3>Step 3: Application Questions</h3>
+                <p style="margin: 1rem 0 2rem 0; color: #666;">Answer honestly and specifically. Judges value genuine insight over polished language.</p>
+
+                <div id="questionsContainer"></div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goToStep(2)">← Back</button>
+                    <button type="button" class="btn-primary" onclick="goToStep(4)">Review Application →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Summary & Download -->
+            <div class="form-step" id="step4">
+                <h3>Step 4: Review & Download</h3>
+                <p style="margin: 1rem 0 2rem 0; color: #666;">
+                    Review your application below, then click "Download PDF" to save your application. 
+                    Email it to <strong>admin@isma.org.uk</strong> before <strong>30 September 2026</strong>.
+                </p>
+
+                <div style="background: var(--light); padding: 1.5rem; border-radius: 6px; margin-bottom: 2rem; max-height: 400px; overflow-y: auto;">
+                    <div id="summaryPreview"></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goToStep(3)">← Back</button>
+                    <button type="button" class="btn-primary" onclick="downloadPDF()">⬇ Download PDF</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>ISMAUK Stress Management Awards 2026</strong></p>
+        <p>International Stress Management Association UK • Registered Charity • Est. 1974</p>
+        
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="font-size: 0.95rem; margin-bottom: 0.75rem;">
+                <strong>Application Fee: £75</strong>
+            </p>
+            <p style="font-size: 0.85rem; margin-bottom: 0.75rem; line-height: 1.6;">
+                As a registered charity, ISMAUK uses income from Awards fees to support its wider work in promoting stress awareness, workplace wellbeing, and psychological safety. This includes providing education, resources, and professional support to help individuals and organisations create healthier working environments.
+            </p>
+        </div>
+        
+        <p style="margin-top: 1.5rem; font-size: 0.9rem;">
+            Questions? Email <a href="mailto:admin@isma.org.uk">admin@isma.org.uk</a>
+        </p>
+    </footer>
+
+    <script>
+        // Questions database
+        const questionSets = {
+            bronze: {
+                individual: [
+                    { id: 'q1', label: 'Your Way of Working (Max 100 words)', type: 'textarea', maxLength: 100, required: true },
+                    { id: 'q2', label: 'Current & Future Initiatives (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q3', label: 'Self-Care & Wellbeing as a Sole Trader (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q4', label: 'Looking Ahead (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q5', label: 'Why You Deserve a Bronze Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ],
+                organisation: [
+                    { id: 'q1', label: 'Unique Selling Point (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q2', label: 'Current & Future Wellbeing Initiatives (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q3', label: 'Early Impact & Learning (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q4', label: 'People & Future Direction (Max 250 words)', type: 'textarea', maxLength: 250, required: true },
+                    { id: 'q5', label: 'Why You Deserve a Bronze Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ]
+            },
+            silver: {
+                individual: [
+                    { id: 'q1', label: 'Your Unique Approach (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q2', label: 'Current Practice & Future Development (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q3', label: 'Communication, Trust & Psychological Safety (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q4', label: 'Professional Development & Qualifications (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q5', label: 'Impact on Clients & Communities (Max 250 words)', type: 'textarea', maxLength: 250, required: true },
+                    { id: 'q6', label: 'Why You Deserve a Silver Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ],
+                organisation: [
+                    { id: 'q1', label: 'Unique Selling Point (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q2', label: 'Wellbeing Initiatives (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q3', label: 'Communication & Psychological Safety (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q4', label: 'Training, Coaching & Development (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q5', label: 'Leadership Impact (Max 250 words)', type: 'textarea', maxLength: 250, required: true },
+                    { id: 'q6', label: 'Why You Deserve a Silver Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ]
+            },
+            gold: {
+                individual: [
+                    { id: 'q1', label: 'Professional USP & Strategic Positioning (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q2', label: 'Current Practice & Future Development (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q3', label: 'Communication, Trust & Psychological Safety (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q4', label: 'Professional Development, Supervision & Qualifications (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q5', label: 'Impact on Clients, Organisations & Communities (Max 250 words)', type: 'textarea', maxLength: 250, required: true },
+                    { id: 'q6', label: 'Inclusion, Accessibility & Equity in Practice (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q7', label: 'Professional Culture, Reputation & Wellbeing (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q8', label: 'Data, Evaluation & Evidence-Based Practice (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q9', label: 'Future Strategy & Professional Sustainability (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q10', label: 'Why You Deserve a Gold Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ],
+                organisation: [
+                    { id: 'q1', label: 'Unique Selling Point (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q2', label: 'Current & Future Initiatives (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q3', label: 'Communication & Psychological Safety (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q4', label: 'Training, Coaching & Development (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q5', label: 'Leadership Impact on People & Performance (Max 250 words)', type: 'textarea', maxLength: 250, required: true },
+                    { id: 'q6', label: 'Benefits, DEI & Inclusion (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q7', label: 'Wellbeing & Organisational Culture (Max 150 words)', type: 'textarea', maxLength: 150, required: true },
+                    { id: 'q8', label: 'Data, Audits & Decision-Making (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q9', label: 'Future Strategy & Sustainability (Max 200 words)', type: 'textarea', maxLength: 200, required: true },
+                    { id: 'q10', label: 'Why You Deserve a Gold Award (Max 250 words)', type: 'textarea', maxLength: 250, required: true }
+                ]
+            }
+        };
+
+        let currentStep = 1;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[name="awardTier"], [name="applicantType"]').forEach(input => {
+                input.addEventListener('change', updateQuestions);
+            });
+        });
+
+        function updateQuestions() {
+            const tier = document.querySelector('input[name="awardTier"]:checked')?.value;
+            const type = document.querySelector('input[name="applicantType"]:checked')?.value;
+
+            if (tier && type) {
+                const container = document.getElementById('questionsContainer');
+                const questions = questionSets[tier][type];
+                
+                container.innerHTML = '';
+                questions.forEach((q) => {
+                    const div = document.createElement('div');
+                    div.className = 'form-group';
+                    const helperId = tier === 'bronze' ? (type === 'individual' ? q.id : q.id + '_org') : 
+                                     tier === 'silver' ? (type === 'individual' ? q.id + '_silver_ind' : q.id + '_silver_org') : 
+                                     q.id;
+                    div.innerHTML = `
+                        <label>${q.label}</label>
+                        <textarea name="${q.id}" maxlength="${q.maxLength}" required onkeyup="updateCharCount(this, ${q.maxLength})"></textarea>
+                        <div class="form-helper">${getHelperText(helperId)}</div>
+                        <div class="char-count"><span id="${q.id}Count">0</span>/${q.maxLength}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function getHelperText(qId) {
+            const helpers = {
+                // Bronze Individual
+                'q1': 'Your Way of Working (Max 100 words)\nPlease indicate which best represents your work: (a) One-to-one individual work, (b) Group work or training delivery, or (c) Coaching (health, wellbeing, life or business). Then describe the most rewarding aspect of your work.\n\nJudges\' note: Look for self-awareness, enthusiasm for impact, and alignment between the work and wellbeing principles.',
+                'q2': 'Current & Future Initiatives (Max 200 words)\nDescribe: (a) Current initiatives that support your working practices and wellbeing, and (b) Any future initiatives you plan to introduce.\n\nJudges\' note: Assess whether there is genuine action underway and credible plans for development.',
+                'q3': 'Self-Care & Wellbeing as a Sole Trader (Max 150 words)\nExplain how you monitor, protect and maintain your own mental health and wellbeing.\n\nJudges\' note: Positively recognise reflection, boundaries and sustainable working practices.',
+                'q4': 'Looking Ahead (Max 150 words)\nDescribe where you see your work or business developing over the next three years, particularly in relation to wellbeing and sustainability.\n\nJudges\' note: Look for realistic, considered ambition — not simply aspirational language.',
+                'q5': 'Why You Deserve a Bronze Award (Max 250 words)\nProvide three reasons why you believe your business or organisation deserves a Bronze Award and how this benefits: your people, your organisation, and your future development.\n\nJudges\' note: Each of the three reasons should be distinct and clearly articulated. This section is used by judges to differentiate winner from runner-up.',
+                
+                // Bronze Organisation
+                'q1_org': 'Unique Selling Point (Max 150 words)\nDescribe what makes your organisation\'s approach to wellbeing or stress management distinctive.\n\nJudges\' note: Look for authenticity and a clear sense of organisational identity around wellbeing.',
+                'q2_org': 'Current & Future Wellbeing Initiatives (Max 150 words)\nProvide an overview of: (a) Current initiatives, and (b) Planned or developing initiatives.\n\nJudges\' note: Assess whether action is already underway and whether there is a credible direction of travel.',
+                'q3_org': 'Early Impact & Learning (Max 200 words)\nExplain how these initiatives are enhancing employee wellbeing, including any changes or improvements observed and any outcomes monitored. Evidence may include feedback, observations or early indicators.\n\nJudges\' note: Qualitative evidence is entirely valid at Bronze level. Judges should reward honest insight over polished metrics.',
+                'q4_org': 'People & Future Direction (Max 250 words)\n(a) Describe the contribution made by an employee or volunteer to a wellbeing initiative. (b) Describe where you see your organisation developing over the next three years, particularly in relation to wellbeing.\n\nJudges\' note: Look for genuine appreciation of people\'s contributions and a realistic vision for the future.',
+                'q5_org': 'Why You Deserve a Bronze Award (Max 250 words)\nProvide three reasons why you believe your organisation deserves a Bronze Award and how this benefits: your people, your organisation, and your future development.\n\nJudges\' note: Each of the three reasons should be distinct and clearly articulated. This section is used by judges to differentiate winner from runner-up.',
+                
+                // Silver Individual
+                'q1_silver_ind': 'Your Unique Approach (Max 150 words)\nDescribe what genuinely differentiates your professional approach to wellbeing and stress management. What makes your practice distinctive?\n\nJudges\' note: Look for a clear, authentic professional identity. Judges should reward substance and specificity — not marketing language.',
+                'q2_silver_ind': 'Current Practice & Future Development (Max 150 words)\nProvide an overview of: (a) The wellbeing work and services you currently deliver on a consistent basis, and (b) How you plan to develop your practice further.\n\nJudges\' note: Assess consistency and depth. Is there a coherent, regular programme of work rather than isolated activity?',
+                'q3_silver_ind': 'Communication, Trust & Psychological Safety (Max 200 words)\nExplain how you create safe, open and supportive conditions in your professional practice, including: how you build trust with clients, reduce stigma, and support confidential discussion.\n\nJudges\' note: Look for practical, specific examples of how psychological safety is created in day-to-day work.',
+                'q4_silver_ind': 'Professional Development & Qualifications (Max 200 words)\nDescribe your continuing professional development, including: qualifications, training, supervision, memberships or specialist learning relevant to wellbeing and stress management.\n\nJudges\' note: Look for evidence of sustained, relevant professional development — not just a list of qualifications. Is learning ongoing and applied?',
+                'q5_silver_ind': 'Impact on Clients & Communities (Max 250 words)\nExplain the impact your work has on the people you support, including: (a) Outcomes achieved for clients or communities, (b) How you evidence or measure that impact, and (c) How your professional reputation and referrals reflect your effectiveness.\n\nJudges\' note: At Silver level, client testimonials, case examples, referral patterns and observed outcomes are all valid evidence. Formal data is helpful but not essential.',
+                'q6_silver_ind': 'Why You Deserve a Silver Award (Max 250 words)\nProvide three reasons why you deserve a Silver Award and how this benefits: the people you support, your practice or culture, and your ongoing sustainability and development.\n\nJudges\' note: Each reason must be clearly distinct and directly linked to Silver-level criteria. Judges use this section to differentiate winner from runner-up.',
+                
+                // Silver Organisation
+                'q1_silver_org': 'Unique Selling Point (Max 150 words)\nDescribe what differentiates your organisation\'s approach to wellbeing and stress management.\n\nJudges\' note: Look for authenticity, maturity and substance — not marketing language.',
+                'q2_silver_org': 'Wellbeing Initiatives (Max 150 words)\nProvide an overview of: (a) Current initiatives that are regularly delivered, and (b) Future initiatives in development.\n\nJudges\' note: Assess consistency — not just breadth. Regular delivery is more valuable than a long list.',
+                'q3_silver_org': 'Communication & Psychological Safety (Max 200 words)\nExplain how management ensures effective communication and accessible support, including: creating safe spaces, reducing stigma, and supporting confidential discussions.\n\nJudges\' note: Look for practical examples rather than policy statements.',
+                'q4_silver_org': 'Training, Coaching & Development (Max 200 words)\nList training and coaching available to employees and managers, including any development pathways or qualifications.\n\nJudges\' note: Look for evidence that training is accessible, relevant and actively promoted.',
+                'q5_silver_org': 'Leadership Impact (Max 250 words)\nExplain how senior leadership influences: (a) Morale, absenteeism and presenteeism, (b) Retention and recruitment, and (c) Motivation and discretionary effort.\n\nJudges\' note: At Silver level, evidence may include feedback, engagement indicators or observed behavioural change. Formal metrics are helpful but not essential.',
+                'q6_silver_org': 'Why You Deserve a Silver Award (Max 250 words)\nProvide three reasons why your organisation deserves a Silver Award and how this benefits: the people you support, your practice or culture, and your ongoing sustainability and development.\n\nJudges\' note: Each reason must be clearly distinct and directly linked to Silver-level criteria. Judges use this to differentiate winner from runner-up.'
+            };
+            return helpers[qId] || 'Be specific and honest. Provide concrete examples, not aspirational statements.';
+        }
+
+        function goToStep(step) {
+            if (!validateStep(currentStep)) {
+                alert('Please complete all required fields before continuing.');
+                return;
+            }
+
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+
+            document.querySelectorAll('.step').forEach((s, idx) => {
+                s.classList.remove('active', 'completed');
+                if (idx + 1 < step) {
+                    s.classList.add('completed');
+                } else if (idx + 1 === step) {
+                    s.classList.add('active');
+                }
+            });
+
+            currentStep = step;
+
+            if (step === 4) {
+                generateSummary();
+            }
+
+            window.scrollTo({ top: document.getElementById('apply').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            const inputs = document.querySelectorAll(`#step${step} [required]`);
+            let valid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#d9534f';
+                    valid = false;
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+
+            return valid;
+        }
+
+        function updateCharCount(textarea, max) {
+            const count = textarea.value.length;
+            const countId = textarea.name + 'Count';
+            const countElement = document.getElementById(countId);
+            
+            if (countElement) {
+                countElement.textContent = count;
+                if (count > max * 0.9) {
+                    countElement.parentElement.classList.add('warning');
+                } else {
+                    countElement.parentElement.classList.remove('warning');
+                }
+            }
+        }
+
+        function generateSummary() {
+            const tier = document.querySelector('input[name="awardTier"]:checked').value;
+            const type = document.querySelector('input[name="applicantType"]:checked').value;
+
+            let summary = `<h4>Award Category</h4>
+                          <p><strong>Tier:</strong> ${tier.charAt(0).toUpperCase() + tier.slice(1)}</p>
+                          <p><strong>Type:</strong> ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}</p>
+
+                          <h4 style="margin-top: 1.5rem;">Your Details</h4>`;
+
+            const fields = ['name', 'email', 'telephone', 'address'];
+            fields.forEach(field => {
+                const value = document.querySelector(`[name="${field}"]`)?.value;
+                if (value) {
+                    const label = field.charAt(0).toUpperCase() + field.slice(1);
+                    summary += `<p><strong>${label}:</strong> ${value}</p>`;
+                }
+            });
+
+            summary += '<h4 style="margin-top: 1.5rem;">Application Answers</h4>';
+            document.querySelectorAll('#questionsContainer textarea').forEach(textarea => {
+                if (textarea.value) {
+                    summary += `<p><strong>${textarea.previousElementSibling.textContent}:</strong></p>
+                               <p style="color: #555; font-size: 0.95rem;">${textarea.value}</p>`;
+                }
+            });
+
+            document.getElementById('summaryPreview').innerHTML = summary;
+        }
+
+        function downloadPDF() {
+            if (!validateStep(4)) {
+                alert('Please ensure all fields are properly filled.');
+                return;
+            }
+
+            const tier = document.querySelector('input[name="awardTier"]:checked').value;
+            const name = document.querySelector('[name="name"]')?.value || 'Application';
+
+            const element = document.getElementById('summaryPreview');
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: `ISMAUK_Awards_2026_${name}_${tier}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+
+            document.getElementById('successMessage').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.remove('show');
+            }, 5000);
+        }
+
+        function showAwardDetail(award) {
+            document.querySelectorAll('.award-detail-page').forEach(page => page.classList.remove('active'));
+            document.getElementById(award + 'Detail').classList.add('active');
+            document.body.classList.add('detail-open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideAwardDetail() {
+            document.querySelectorAll('.award-detail-page').forEach(page => page.classList.remove('active'));
+            document.body.classList.remove('detail-open');
+        }
+
+        // Guidance Modal Functions
+        function openGuidance() {
+            document.getElementById('guidanceModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGuidance() {
+            document.getElementById('guidanceModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('guidanceModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeGuidance();
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeGuidance();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

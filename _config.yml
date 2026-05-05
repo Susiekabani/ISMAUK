@@ -1,0 +1,24 @@
+title: ISMAUK Stress Management Awards 2026
+description: Interactive application portal for the ISMAUK Stress Management Awards 2026
+theme: null
+plugins: []
+
+# GitHub Pages settings
+markdown: GFM
+highlighter: rouge
+lsi: false
+safe: true
+incremental: false
+
+# Build settings
+exclude:
+  - .gitignore
+  - LICENSE
+  - QUICKSTART.md
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
