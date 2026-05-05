@@ -1548,9 +1548,15 @@
         }
 
         function goToStep(step) {
-            if (!validateStep(currentStep)) {
+            // Only validate if going FORWARD, not when going BACK
+            if (step > currentStep && !validateStep(currentStep)) {
                 alert('Please complete all required fields before continuing.');
                 return;
+            }
+
+            // Track when moving to step 3 (Application Questions)
+            if (step === 3 && currentStep === 2) {
+                trackApplicationStart();
             }
 
             document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
@@ -1824,7 +1830,37 @@
             document.body.classList.remove('detail-open');
         }
 
-        // Guidance Modal Functions
+        // Google Sheets tracking
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxejgronIN-sTP0WkUwRqYb4uoxu_D5sFg-q8YE4WSRzGzFgv7PPnti7JnDcMGXYrDP/exec';
+
+        function trackApplicationStart() {
+            const tier = document.querySelector('input[name="awardTier"]:checked')?.value;
+            const type = document.querySelector('input[name="applicantType"]:checked')?.value;
+            const name = document.querySelector('[name="name"]')?.value;
+            const email = document.querySelector('[name="email"]')?.value;
+
+            if (name && email && tier && type) {
+                const data = {
+                    name: name,
+                    email: email,
+                    tier: tier,
+                    type: type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'
+                };
+
+                // Send to Google Sheets
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    mode: 'no-cors'
+                })
+                .then(response => {
+                    console.log('Tracking submitted successfully');
+                })
+                .catch(error => {
+                    console.log('Tracking error (non-critical):', error);
+                });
+            }
+        }
         function openGuidance() {
             document.getElementById('guidanceModal').classList.add('active');
             document.body.style.overflow = 'hidden';
