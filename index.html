@@ -1640,31 +1640,99 @@
 
             const tier = document.querySelector('input[name="awardTier"]:checked').value;
             const name = document.querySelector('[name="name"]')?.value || 'Application';
+            const type = document.querySelector('input[name="applicantType"]:checked').value;
 
-            const element = document.getElementById('summaryPreview');
+            // Build the PDF content directly instead of relying on DOM
+            let pdfContent = `
+                <div style="font-family: Georgia, serif; padding: 20px;">
+                    <h2 style="color: #003d7a; text-align: center; margin-bottom: 30px;">
+                        🏆 ISMAUK Awards 2026 - Application Form
+                    </h2>
+                    
+                    <h3 style="color: #003d7a; border-bottom: 2px solid #a91e6a; padding-bottom: 10px;">Award Category</h3>
+                    <p><strong>Tier:</strong> ${tier.charAt(0).toUpperCase() + tier.slice(1)}</p>
+                    <p><strong>Type:</strong> ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}</p>
+                    
+                    <h3 style="color: #003d7a; border-bottom: 2px solid #a91e6a; padding-bottom: 10px; margin-top: 25px;">Your Details</h3>
+            `;
+
+            // Add all the detail fields
+            const detailFields = [
+                { name: 'name', label: 'Name' },
+                { name: 'contactName', label: 'Contact Name' },
+                { name: 'email', label: 'Email' },
+                { name: 'telephone', label: 'Telephone' },
+                { name: 'address', label: 'Address' },
+                { name: 'website', label: 'Website' },
+                { name: 'sector', label: 'Sector' }
+            ];
+
+            detailFields.forEach(field => {
+                const value = document.querySelector(`[name="${field.name}"]`)?.value;
+                if (value && value.trim()) {
+                    pdfContent += `<p><strong>${field.label}:</strong> ${value}</p>`;
+                }
+            });
+
+            // Add application answers
+            pdfContent += `<h3 style="color: #003d7a; border-bottom: 2px solid #a91e6a; padding-bottom: 10px; margin-top: 25px;">Application Answers</h3>`;
             
-            // Make sure element has content
-            if (!element || element.textContent.trim().length === 0) {
-                alert('Error: Application summary is empty. Please fill in all required fields.');
+            const textareas = document.querySelectorAll('#questionsContainer textarea');
+            if (textareas.length === 0) {
+                alert('No questions found. Please go back and fill in the application questions.');
                 return;
             }
 
+            let questionsFound = false;
+            textareas.forEach(textarea => {
+                if (textarea.value && textarea.value.trim()) {
+                    questionsFound = true;
+                    const label = textarea.previousElementSibling?.textContent || 'Question';
+                    const value = textarea.value;
+                    pdfContent += `
+                        <p style="margin-top: 15px; margin-bottom: 5px;"><strong>${label}</strong></p>
+                        <p style="color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                            ${value}
+                        </p>
+                    `;
+                }
+            });
+
+            if (!questionsFound) {
+                alert('No answers found. Please fill in at least some questions.');
+                return;
+            }
+
+            pdfContent += `
+                    <p style="margin-top: 40px; font-size: 0.85rem; color: #999; border-top: 1px solid #ddd; padding-top: 20px;">
+                        Generated: ${new Date().toLocaleDateString()} | ISMAUK Stress Management Awards 2026
+                    </p>
+                </div>
+            `;
+
+            // Create temporary container
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = pdfContent;
+            tempContainer.style.display = 'none';
+            document.body.appendChild(tempContainer);
+
             const opt = {
-                margin: [10, 10, 10, 10],
+                margin: [15, 15, 15, 15],
                 filename: `ISMAUK_Awards_2026_${name}_${tier}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, allowTaint: true, useCORS: true },
+                html2canvas: { scale: 2, allowTaint: true, useCORS: true, backgroundColor: '#ffffff' },
                 jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
             };
 
-            // Clone element to avoid modifying original
-            const clonedElement = element.cloneNode(true);
-            
             html2pdf()
                 .set(opt)
-                .from(clonedElement)
+                .from(tempContainer)
                 .save()
                 .then(() => {
+                    // Clean up temp element
+                    document.body.removeChild(tempContainer);
+                    
+                    // Show success message
                     document.getElementById('successMessage').classList.add('show');
                     setTimeout(() => {
                         document.getElementById('successMessage').classList.remove('show');
@@ -1672,7 +1740,8 @@
                 })
                 .catch((error) => {
                     console.error('PDF generation error:', error);
-                    alert('Error generating PDF. Please try again.');
+                    document.body.removeChild(tempContainer);
+                    alert('Error generating PDF. Please try again. If the problem persists, please email admin@ismauk.org.uk');
                 });
         }
 
