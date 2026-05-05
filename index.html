@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISMAUK Stress Management Awards 2026</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
@@ -441,7 +440,7 @@
             background: white;
             margin: 4rem auto;
             padding: 3rem 2rem;
-            max-width: 900px;
+            max-width: 1000px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             scroll-margin-top: 80px;
@@ -512,7 +511,12 @@
             line-height: 1.3;
         }
 
-        .form-group textarea:focus ~ .form-helper {
+        .form-group textarea:focus {
+            opacity: 1;
+        }
+
+        /* Hide helper when textarea gets focus */
+        .form-group:has(textarea:focus) .form-helper {
             display: none;
         }
 
@@ -1643,114 +1647,112 @@
             const type = document.querySelector('input[name="applicantType"]:checked').value;
             const name = document.querySelector('[name="name"]')?.value || 'Application';
 
-            // Build content
-            let content = `
-                <div style="font-family: Arial, sans-serif; padding: 20px; background: white; color: #333;">
-                    <h1 style="color: #003d7a; text-align: center; margin-bottom: 10px;">ISMAUK Awards 2026</h1>
-                    <h2 style="color: #a91e6a; text-align: center; margin-bottom: 30px; font-size: 16px;">Application Form</h2>
-                    
-                    <h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Award Category</h3>
-                    <p><strong>Tier:</strong> ${tier.charAt(0).toUpperCase() + tier.slice(1)}</p>
-                    <p><strong>Type:</strong> ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}</p>
-                    
-                    <h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Your Details</h3>
-            `;
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            let yPosition = 20;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const margin = 15;
+            const lineHeight = 7;
+            const maxWidth = pageWidth - (margin * 2);
 
-            // Add details
-            const details = [
-                { name: 'name', label: 'Name' },
-                { name: 'email', label: 'Email' },
-                { name: 'telephone', label: 'Telephone' },
-                { name: 'address', label: 'Address' }
-            ];
-
-            details.forEach(d => {
-                const val = document.querySelector(`[name="${d.name}"]`)?.value;
-                if (val && val.trim()) {
-                    content += `<p><strong>${d.label}:</strong> ${val}</p>`;
+            // Helper function to add text with wrapping
+            function addText(text, fontSize, bold, yPos) {
+                pdf.setFontSize(fontSize);
+                if (bold) {
+                    pdf.setFont(undefined, 'bold');
+                } else {
+                    pdf.setFont(undefined, 'normal');
                 }
-            });
-
-            // Add answers section
-            content += `<h3 style="color: #003d7a; font-size: 14px; border-bottom: 2px solid #a91e6a; padding-bottom: 8px; margin-top: 20px;">Application Answers</h3>`;
-
-            const textareas = document.querySelectorAll('#questionsContainer textarea');
-            let hasAnswers = false;
-
-            textareas.forEach(ta => {
-                if (ta.value && ta.value.trim()) {
-                    hasAnswers = true;
-                    const q = ta.previousElementSibling?.textContent || 'Question';
-                    content += `<div style="margin-top: 15px; padding: 10px; border-left: 3px solid #a91e6a; background: #f9f9f9;">
-                        <p style="margin: 0 0 8px 0; font-weight: bold; color: #003d7a;">${q}</p>
-                        <p style="margin: 0; color: #555; font-size: 13px; white-space: pre-wrap; line-height: 1.5;">${ta.value}</p>
-                    </div>`;
-                }
-            });
-
-            if (!hasAnswers) {
-                alert('Please fill in at least one answer.');
-                return;
+                const lines = pdf.splitTextToSize(text, maxWidth);
+                pdf.text(lines, margin, yPos);
+                return yPos + (lines.length * lineHeight);
             }
 
-            content += `</div>`;
-
-            // Create temporary container
-            const container = document.createElement('div');
-            container.innerHTML = content;
-            container.style.position = 'absolute';
-            container.style.left = '-9999px';
-            container.style.width = '210mm';
-            container.style.minHeight = '297mm';
-            container.style.backgroundColor = 'white';
-            document.body.appendChild(container);
-
-            // Use html2canvas to convert HTML to image
-            html2canvas(container, {
-                scale: 2,
-                useCORS: true,
-                logging: false,
-                backgroundColor: '#ffffff'
-            }).then(canvas => {
-                // Create PDF from canvas
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const pageHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = pageWidth - 20; // 10mm margins
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-                let heightLeft = imgHeight;
-                let position = 10;
-
-                // Add image to PDF with proper scaling
-                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                // Add additional pages if needed
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight + 10;
+            // Helper function to handle page breaks
+            function checkPageBreak(height) {
+                if (yPosition + height > pageHeight - margin) {
                     pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
+                    yPosition = margin;
+                }
+            }
+
+            try {
+                // Title
+                checkPageBreak(20);
+                yPosition = addText('ISMAUK Awards 2026', 18, true, yPosition);
+                yPosition = addText('Application Form', 14, true, yPosition) + 10;
+
+                // Award Category
+                checkPageBreak(15);
+                yPosition = addText('Award Category', 12, true, yPosition);
+                yPosition = addText(`Tier: ${tier.charAt(0).toUpperCase() + tier.slice(1)}`, 11, false, yPosition) + 2;
+                yPosition = addText(`Type: ${type === 'individual' ? 'Individual/Sole Trader' : 'Organisation/Charity'}`, 11, false, yPosition) + 8;
+
+                // Your Details
+                checkPageBreak(15);
+                yPosition = addText('Your Details', 12, true, yPosition);
+
+                const details = [
+                    { name: 'name', label: 'Name' },
+                    { name: 'email', label: 'Email' },
+                    { name: 'telephone', label: 'Telephone' },
+                    { name: 'address', label: 'Address' }
+                ];
+
+                details.forEach(d => {
+                    const val = document.querySelector(`[name="${d.name}"]`)?.value;
+                    if (val && val.trim()) {
+                        checkPageBreak(10);
+                        yPosition = addText(`${d.label}: ${val}`, 10, false, yPosition) + 2;
+                    }
+                });
+
+                // Application Answers
+                yPosition += 5;
+                checkPageBreak(15);
+                yPosition = addText('Application Answers', 12, true, yPosition);
+
+                const textareas = document.querySelectorAll('#questionsContainer textarea');
+                let hasAnswers = false;
+
+                textareas.forEach(ta => {
+                    if (ta.value && ta.value.trim()) {
+                        hasAnswers = true;
+                        const q = ta.previousElementSibling?.textContent || 'Question';
+                        const answer = ta.value;
+
+                        checkPageBreak(15);
+                        yPosition = addText(q, 11, true, yPosition) + 2;
+                        checkPageBreak(20);
+                        yPosition = addText(answer, 10, false, yPosition) + 5;
+                    }
+                });
+
+                if (!hasAnswers) {
+                    alert('Please fill in at least one answer.');
+                    return;
                 }
 
-                // Save the PDF
-                pdf.save(`ISMAUK_Awards_2026_${name}_${tier}.pdf`);
+                // Footer
+                yPosition += 5;
+                checkPageBreak(10);
+                yPosition = addText(`Generated: ${new Date().toLocaleDateString()} | ISMAUK Stress Management Awards 2026`, 8, false, yPosition);
 
-                // Clean up
-                document.body.removeChild(container);
+                // Save PDF
+                pdf.save(`ISMAUK_Awards_2026_${name}_${tier}.pdf`);
 
                 // Show success message
                 document.getElementById('successMessage').classList.add('show');
                 setTimeout(() => {
                     document.getElementById('successMessage').classList.remove('show');
                 }, 5000);
-            }).catch(error => {
+
+            } catch (error) {
                 console.error('PDF Error:', error);
-                document.body.removeChild(container);
                 alert('Error creating PDF. Please email your application to admin@isma.org.uk');
-            });
+            }
         }
 
         function showAwardDetail(award) {
