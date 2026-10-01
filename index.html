@@ -297,7 +297,7 @@ footer strong{color:rgba(255,255,255,0.9)}
     <div class="hero-meta">
       <div class="hero-meta-cell">
         <span class="meta-label">Closing Date</span>
-        <span class="meta-value">30 September 2026</span>
+        <span class="meta-value">9 October 2026</span>
         <span class="meta-sub">All applications by midnight</span>
       </div>
       <div class="hero-meta-cell">
@@ -332,7 +332,7 @@ footer strong{color:rgba(255,255,255,0.9)}
   <div class="about-stat-row">
     <div class="stat-item"><div class="stat-num">52+</div><div class="stat-label">Years of ISMAUK</div></div>
     <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Award Categories</div></div>
-    <div class="stat-item"><div class="stat-num">30 Sep</div><div class="stat-label">2026 Deadline</div></div>
+    <div class="stat-item"><div class="stat-num">9 Oct</div><div class="stat-label">2026 Deadline</div></div>
   </div>
 
   <div class="about-grid">
@@ -427,7 +427,7 @@ footer strong{color:rgba(255,255,255,0.9)}
         <div style="width:32px;height:32px;border-radius:50%;background:var(--magenta);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0">4</div>
         <div style="width:1px;flex:1;background:var(--border);margin-top:4px"></div>
       </div>
-      <div style="padding-top:4px"><strong style="color:var(--navy)">Email your application</strong><br><span style="font-size:0.88rem;color:var(--muted)">Send your PDF to <a href="mailto:admin@isma.co.uk" style="color:var(--magenta)">admin@isma.co.uk</a> before 30 September 2026.</span></div>
+      <div style="padding-top:4px"><strong style="color:var(--navy)">Email your application</strong><br><span style="font-size:0.88rem;color:var(--muted)">Send your PDF to <a href="mailto:admin@isma.co.uk" style="color:var(--magenta)">admin@isma.co.uk</a> before 9 October 2026.</span></div>
     </div>
     <div style="display:flex;gap:16px">
       <div style="width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0">5</div>
@@ -793,7 +793,7 @@ footer strong{color:rgba(255,255,255,0.9)}
         <div class="step-num magenta">4</div>
         <div class="step-row-text">
           <h4>Submit your application</h4>
-          <p>Download your completed form using the button below, then email it to <a href="mailto:admin@isma.co.uk" style="color:var(--magenta);font-weight:600">admin@isma.co.uk</a> before <strong>30 September 2026</strong>.</p>
+          <p>Download your completed form using the button below, then email it to <a href="mailto:admin@isma.co.uk" style="color:var(--magenta);font-weight:600">admin@isma.co.uk</a> before <strong>9 October 2026</strong>.</p>
         </div>
       </div>
       <div class="next-step-row" style="margin-bottom:0">
@@ -819,7 +819,7 @@ footer strong{color:rgba(255,255,255,0.9)}
       <h4>Reminder</h4>
       <ol>
         <li><strong>Complete</strong> your application above — most applicants need 2–3 pages.</li>
-        <li><strong>Email</strong> your downloaded PDF to <a href="mailto:admin@isma.co.uk">admin@isma.co.uk</a> by <strong>30 September 2026</strong>.</li>
+        <li><strong>Email</strong> your downloaded PDF to <a href="mailto:admin@isma.co.uk">admin@isma.co.uk</a> by <strong>9 October 2026</strong>.</li>
         <li><strong>Payment</strong> — a £75 fee applies. You'll be advised on how to pay once your application is received.</li>
       </ol>
     </div>
@@ -983,7 +983,7 @@ function renderQuestions(){
     html+='<h4>Question '+(i+1)+' of '+qs.length+'</h4>';
     html+='<span class="q-marks">'+q.marks+' marks | max '+q.words+' words</span>';
     html+='<p class="q-guidance">'+q.guidance+'</p>';
-    html+='<textarea id="qa'+i+'" rows="5" maxlength="'+(q.words*7)+'" oninput="countWords(this,'+(i)+','+(q.words)+')" style="width:100%;display:block;"></textarea>';
+    html+='<textarea id="qa'+i+'" rows="5" oninput="countWords(this,'+(i)+','+(q.words)+')" style="width:100%;display:block;"></textarea>';
     html+='<div class="word-count" id="wc'+i+'">0 / '+q.words+' words</div>';
     html+='</div>';
   });
@@ -991,10 +991,21 @@ function renderQuestions(){
 }
 
 function countWords(el,idx,limit){
-  var words=el.value.trim().split(/\s+/).filter(function(w){return w.length>0}).length;
+  // Word limit is enforced by WORDS, not characters. Anything past the limit is trimmed.
+  var re=/\S+/g, m, n=0, cut=-1;
+  while((m=re.exec(el.value))!==null){
+    n++;
+    if(n===limit){ cut=m.index+m[0].length; }
+  }
   var wc=document.getElementById('wc'+idx);
-  wc.textContent=words+' / '+limit+' words';
-  wc.classList.toggle('over',words>limit);
+  if(n>limit && cut>-1){
+    el.value=el.value.slice(0,cut);
+    n=limit;
+    wc.textContent=n+' / '+limit+' words (limit reached)';
+  } else {
+    wc.textContent=n+' / '+limit+' words';
+  }
+  wc.classList.toggle('over',n>=limit);
 }
 
 // ── REVIEW ──
