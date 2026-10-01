@@ -1115,6 +1115,16 @@ function downloadPDF(){
 
   // Questions
   qs.forEach(function(q,i){
+    // Keep each question together on one page where it can fit
+    var ansPre=document.getElementById('qa'+i)?document.getElementById('qa'+i).value.trim():'';
+    doc.setFont('helvetica','normal');doc.setFontSize(9);
+    var estAns=doc.splitTextToSize(ansPre||'[No answer provided]',usableW-8).length+(ansPre.match(/\n/g)||[]).length;
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);
+    var estQ=doc.splitTextToSize(q.q,usableW).length;
+    doc.setFont('helvetica','italic');doc.setFontSize(7.5);
+    var estG=doc.splitTextToSize('Guidance: '+q.guidance,usableW).length;
+    var blockH=12+estQ*5.5+estG*4.8+2+Math.max(20,estAns*5+8);
+    if(y+blockH>283 && blockH<=283-margin){doc.addPage();y=margin;}
     addPageIfNeeded(20);
     // Q number bar
     doc.setFillColor(0,61,122);
@@ -1123,7 +1133,7 @@ function downloadPDF(){
     doc.setFontSize(8);
     doc.setFont('helvetica','bold');
     doc.text('Q'+(i+1)+' of '+qs.length+'  |  '+q.q.substring(0,80)+(q.q.length>80?'…':''),margin+3,y+5);
-    y+=9;
+    y+=12;
 
     // Full question
     doc.setTextColor(0,18,48);
@@ -1138,23 +1148,36 @@ function downloadPDF(){
     wrapText('Guidance: '+q.guidance,margin,y,usableW,4.8,doc);
     y+=2;
 
-    // Answer box
+    // Answer box (set the answer font BEFORE measuring, and flow across pages)
     var ans=document.getElementById('qa'+i)?document.getElementById('qa'+i).value.trim():'';
-    var ansLines=doc.splitTextToSize(ans||'[No answer provided]',usableW-8);
-    var boxH=Math.max(20,ansLines.length*5+8);
-    addPageIfNeeded(boxH);
-    doc.setFillColor(255,255,255);
-    doc.setDrawColor(224,220,232);
-    doc.rect(margin,y,usableW,boxH,'FD');
-    doc.setTextColor(26,26,46);
     doc.setFontSize(9);
     doc.setFont('helvetica','normal');
-    var ay=y+6;
-    ansLines.forEach(function(line){
-      doc.text(line,margin+4,ay);
-      ay+=5;
+    var ansLines=[];
+    (ans||'[No answer provided]').split(/\r?\n/).forEach(function(para){
+      var pl=doc.splitTextToSize(para,usableW-8);
+      if(pl.length===0){pl=[''];}
+      ansLines=ansLines.concat(pl);
     });
-    y+=boxH+10;
+    var lineH=5, pad=4, bottom=283, idx=0;
+    addPageIfNeeded(Math.min(20,ansLines.length*lineH+2*pad));
+    while(idx<ansLines.length){
+      var fit=Math.floor((bottom-y-2*pad)/lineH);
+      if(fit<1){doc.addPage();y=margin;continue;}
+      var chunk=ansLines.slice(idx,idx+fit);
+      var boxH=Math.max(idx===0&&chunk.length===ansLines.length?20:0,chunk.length*lineH+2*pad);
+      doc.setFillColor(255,255,255);
+      doc.setDrawColor(224,220,232);
+      doc.rect(margin,y,usableW,boxH,'FD');
+      doc.setTextColor(26,26,46);
+      doc.setFontSize(9);
+      doc.setFont('helvetica','normal');
+      var ay=y+pad+3.2;
+      chunk.forEach(function(line){doc.text(line,margin+4,ay);ay+=lineH;});
+      idx+=chunk.length;
+      y+=boxH;
+      if(idx<ansLines.length){doc.addPage();y=margin;}
+    }
+    y+=10;
   });
 
   // Footer on each page
